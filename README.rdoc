@@ -1,4 +1,4 @@
-= githubissues-port-- An Excel import/export extension for github issues for Ruby
+= githubissues-port, an Excel import/export extension for github issues in Ruby
 
 githubissues-port is a Ruby gem that facilittes easy import and export of Github Issues in Ruby and Ruyb on Rails.
 
@@ -42,7 +42,7 @@ to install the development gem dependecies:
     gem install bundler
     bundle install
 
-Once this is complete, you should be able to run the test suite:
+githubissues-port this is complete, you should be able to run the test suite:
 
     rake
 
