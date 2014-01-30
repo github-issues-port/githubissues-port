@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Githubissues::Port::VERSION
   spec.authors       = ["pythonicrubyist", "ankit8898", "hemalijain"]
   spec.email         = ["pythonicrubyist@gmail.com"]
-  spec.description   = %q{An Excel import/export extension for github issues for Ruby.}
+  spec.description   = %q{An Excel import/export extension for github issues in Ruby.}
   spec.summary       = %q{github-issues-port is a Ruby gem that facilittes easy import and export of Github Issues in Ruby and Ruyb on Rails.}
-  spec.homepage      = "https://github.com/github-issues-port/github-issues-port"
+  spec.homepage      = "https://github.com/github-issues-port/githubissues-port"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
