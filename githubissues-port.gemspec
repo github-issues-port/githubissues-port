@@ -6,7 +6,7 @@ require 'githubissues-port/version'
 Gem::Specification.new do |spec|
   spec.name          = "githubissues-port"
   spec.version       = Githubissues::Port::VERSION
-  spec.authors       = ["pythonicrubyist", "ankit8898", "hemalijain"]
+  spec.authors       = ["Ramtin Vaziri", "Ankit gupta", "Hemali Jain"]
   spec.description   = %q{An Excel import/export extension for github issues in Ruby.}
   spec.summary       = %q{github-issues-port is a Ruby gem that facilittes easy import and export of Github Issues in Ruby and Ruyb on Rails.}
   spec.homepage      = "https://github.com/github-issues-port/githubissues-port"

@@ -5,18 +5,32 @@ module Githubissues
   module Port   
     class Githubissues::Port::Import
       attr_reader :path, :messages
-      def initialize connection, owner, repo, path 
+      def initialize connection, owner, repo, path, options = {}
+        @path = path
+        fields = (options.has_key? :fields) ? options[:fields] : %w(labels)
         creek = Creek::Book.new path, :check_file_extension => false
         sheet= creek.sheets[0]
         @messages = []
         sheet.rows.each_with_index do |r, i|
-          next if i.eql? 0
-          number = r["A#{i+1}"]
-          break if number.nil?
-          label_string =  r["D#{i+1}"]
-          labels = (label_string.nil?) ? [] : label_string.split(',')     
-          issue = connection.issues.edit owner, repo, number, labels: labels
-          @messages.push "The label for issue ##{number} updated to #{labels.join(',')}."
+          case i
+          when 0
+            @header = r.invert
+          else
+            number = r["A#{i+1}"]
+            updates = {}
+            break if number.nil?
+
+            fields.each do |f|
+              if @header.has_key? f
+                value = r[@header[f].gsub '1', (i+1).to_s]
+                value = value.split(',').map(&:strip) if f.downcase.eql?'labels' and (!value.nil?)
+                updates[f.downcase] = value
+              end
+            end
+
+            issue = connection.issues.edit owner, repo, number, updates
+            @messages.push "Issue ##{number} updated: #{updates.inspect}"
+          end
         end
         @messages
       end
