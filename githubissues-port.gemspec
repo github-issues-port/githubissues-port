@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 1.9.2'
 
   spec.add_dependency 'github_api'
-  spec.add_dependency 'axlsx' 
-  spec.add_dependency 'creek'  
+  spec.add_dependency 'axlsx'
+  spec.add_dependency 'creek'
+  spec.add_development_dependency 'rspec'
 end
