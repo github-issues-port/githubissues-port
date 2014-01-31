@@ -4,35 +4,70 @@ require 'creek'
 module Githubissues
   module Port   
     class Githubissues::Port::Import
-      attr_reader :path, :messages
+      attr_reader :connection, :owner, :repo, :path, :messages, :header
       def initialize connection, owner, repo, path, options = {}
         @path = path
-        fields = (options.has_key? :fields) ? options[:fields] : %w(labels)
+        @connection = connection
+        @owner = owner
+        @repo = repo
+        @fields = (options.has_key? :fields) ? options[:fields] : %w(labels)
+        @messages = []
+        parse_excel
+      end
+
+      def parse_excel
         creek = Creek::Book.new path, :check_file_extension => false
         sheet= creek.sheets[0]
-        @messages = []
-        sheet.rows.each_with_index do |r, i|
-          case i
-          when 0
-            @header = r.invert
+        sheet.rows.each_with_index do |row, row_index|
+          break if row.first.nil? and row[1].nil?
+          row_number = row_index + 1
+          case row_number
+          when 1          
+            parse_header row, row_number
           else
-            number = r["A#{i+1}"]
-            updates = {}
-            break if number.nil?
-
-            fields.each do |f|
-              if @header.has_key? f
-                value = r[@header[f].gsub '1', (i+1).to_s]
-                value = value.split(',').map(&:strip) if f.downcase.eql?'labels' and (!value.nil?)
-                updates[f.downcase] = value
-              end
-            end
-
-            issue = connection.issues.edit owner, repo, number, updates
-            @messages.push "Issue ##{number} updated: #{updates.inspect}"
+            parse_row row, row_number
           end
         end
-        @messages
+      end
+
+      def parse_header row, row_number
+        @header = row.invert
+        @header.each{|k, v| @header[k] = v.gsub('1', '')}
+      end
+
+      def extract_updates row, row_number
+        updates = {}
+        @fields.each do |field|
+          if @header.has_key? field
+            value = row["#{@header[field]}#{row_number}"]
+            value = value.split(',').map(&:strip) if field.downcase.eql?'labels' and (!value.nil?)
+            updates[field.downcase] = value
+          end
+        end
+        puts updates.inspect
+        updates
+      end
+
+      def update_existing_issue number, updates
+        issue = @connection.issues.edit @owner, @repo, number, updates
+        @messages.push "Issue ##{issue.number} updated: #{updates.inspect}" 
+      end
+
+      def create_new_issue number, updates
+        @connection.user = @owner
+        @connection.repo = @repo          
+        issue = @connection.issues.create updates
+        @messages.push "Issue ##{issue.number} created: #{updates.inspect}"
+      end
+
+      def parse_row row, row_number
+        number = row["A#{row_number}"]
+        updates = extract_updates row, row_number
+        unless number.nil?
+          update_existing_issue number, updates
+        else
+          create_new_issue number, updates
+        end
       end
     end
   end

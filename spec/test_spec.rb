@@ -14,7 +14,7 @@ describe 'githubissues-port exporting and importing to xlsx' do
   end
 
   it 'import should be successfull.' do
-    import = Githubissues::Port::Import.new @connection, 'pythonicrubyist', 'test_issues', 'spec/fixtures/sample.xlsx', fields: ['labels']
+    import = Githubissues::Port::Import.new @connection, 'pythonicrubyist', 'test_issues', 'spec/fixtures/sample.xlsx', fields: ['title', 'labels']
     puts import.messages.inspect
     import.should_not be_nil
   end  
