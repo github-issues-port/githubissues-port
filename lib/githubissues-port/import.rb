@@ -44,7 +44,6 @@ module Githubissues
             updates[field.downcase] = value
           end
         end
-        puts updates.inspect
         updates
       end
 
