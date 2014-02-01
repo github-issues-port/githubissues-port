@@ -1,21 +1,27 @@
-{<img src="https://badge.fury.io/rb/githubissues-port.png" alt="Gem Version" />}[http://badge.fury.io/rb/githubissues-port]
+# Github Issues Port 
+___
+Ever Felt the need of Exporting your Github Issues or Importing the issues in Github via a Excel.  `githubissues-port` is your answer. :neckbeard:.
 
-= githubissues-port, an Excel import/export extension for github issues in Ruby
+`githubissues-port` can be used from the command line or as part of a Ruby web framework.
 
-githubissues-port is a Ruby gem that facilittes easy import and export of Github Issues in Ruby and Ruyb on Rails.
+***
+___
+#### Sample Application
 
+[Sample Application with usage can be found here](http://mysterious-springs-2093.herokuapp.com/)
+***
+### Installation
 
-== Installation
-
-githubissues-port can be used from the command line or as part of a Ruby web framework. To install the gem using terminal, run the following command:
+To install the gem using terminal, run the following command:
 
     gem install githubissues-port
 
-To use it in Rails, add this line to your Gemfile:
+To use it in rails application add the gem to the Gemfile:
 
-    gem "githubissues-port"
+    gem "githubissues-port"    
 
-== Basic Usage
+### Basic Usage
+
 githubissues-port can simply import or export issues from an Excel file.:
 
     require 'githubissues-port'
@@ -30,12 +36,14 @@ githubissues-port can simply import or export issues from an Excel file.:
     connection = Github.new(basic_auth: "#{your_github_username}:#{your_github_password}")
     
     # The import mudule will import issues from Excel, creates an issue if the number blank, otherwise, updating an existing issue by looking up the issue number.
+
     Githubissues::Port::Import.new(connection, owner, repo, 'import.xlsx', fields: ['title', 'labels'])
     
     # The export module will export issues to Excel.
+
     Githubissues::Port::Export.new(connection, owner, repo, 'export.xlsx', fields: ['number', 'title', 'body', 'labels'])
 
-== Contributing
+### Contributing
 
 Contributions are welcomed. You can fork a repository, add your code changes to the forked branch, ensure all existing unit tests pass, create new unit tests cover your new changes and finally create a pull request.
 
@@ -47,14 +55,14 @@ to install the development gem dependecies:
 
 githubissues-port this is complete, you should be able to run the test suite:
 
-    rake
+    rake spec
 
 
-== Bug Reporting
+### Bug Reporting
 
 Please use the {Issues}[https://github.com/githubissues-port/githubissues-port/issues] page to report bugs or suggest new enhancements.
 
 
-== License
+### License
 
-Creek has been published under {MIT License}[https://github.com/githubissues-port/githubissues-port/blob/master/LICENSE.txt]
+githubissues-port has been published under {MIT License}[https://github.com/githubissues-port/githubissues-port/blob/master/LICENSE.txt]
