@@ -1,15 +1,13 @@
 # Github Issues Port 
-___
-Ever Felt the need of Exporting your Github Issues or Importing the issues in Github via a Excel.  `githubissues-port` is your answer. :neckbeard:.
 
-`githubissues-port` can be used from the command line or as part of a Ruby web framework.
+Ever Felt the need of Exporting your Github Issues or Importing the issues in Github via a Excel.  **githubissues-port** is your answer. :neckbeard:.
 
-***
-___
+**githubissues-port** can be used from the command line or as part of a Ruby web framework.
+
 #### Sample Application
 
 [Sample Application with usage can be found here](http://mysterious-springs-2093.herokuapp.com/)
-***
+
 ### Installation
 
 To install the gem using terminal, run the following command:
@@ -60,9 +58,9 @@ githubissues-port this is complete, you should be able to run the test suite:
 
 ### Bug Reporting
 
-Please use the {Issues}[https://github.com/githubissues-port/githubissues-port/issues] page to report bugs or suggest new enhancements.
+Please use the [Issues](https://github.com/githubissues-port/githubissues-port/issues) page to report bugs or suggest new enhancements.
 
 
 ### License
 
-githubissues-port has been published under {MIT License}[https://github.com/githubissues-port/githubissues-port/blob/master/LICENSE.txt]
+githubissues-port has been published under [MIT License](https://github.com/githubissues-port/githubissues-port/blob/master/LICENSE.txt])
