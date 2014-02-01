@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/github-issues-port/githubissues-port.png?branch=master)](https://travis-ci.org/github-issues-port/githubissues-port)[![Gem Version](https://badge.fury.io/rb/githubissues-port.png)](http://badge.fury.io/rb/githubissues-port)
+
 # Github Issues Port 
 
 Ever Felt the need of Exporting your Github Issues or Importing the issues in Github via a Excel.  **githubissues-port** is your answer. :neckbeard:.
