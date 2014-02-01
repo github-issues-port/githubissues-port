@@ -13,6 +13,7 @@ To use it in Rails, add this line to your Gemfile:
 
     gem "githubissues-port"
 
+{<img src="https://badge.fury.io/rb/githubissues-port.png" alt="Gem Version" />}[http://badge.fury.io/rb/githubissues-port]
 
 == Basic Usage
 githubissues-port can simply import or export issues from an Excel file.:
@@ -28,9 +29,11 @@ githubissues-port can simply import or export issues from an Excel file.:
     
     connection = Github.new(basic_auth: "#{your_github_username}:#{your_github_password}")
     
-    Githubissues::Port::Import.new(connection, owner, repo, 'import.xlsx', fields: ['labels'])
+    # The import mudule will import issues from Excel, creates an issue if the number blank, otherwise, updating an existing issue by looking up the issue number.
+    Githubissues::Port::Import.new(connection, owner, repo, 'import.xlsx', fields: ['title', 'labels'])
     
-    Githubissues::Port::Export.new)connection, owner, repo, 'export.xlsx', fields: ['number', 'title', 'body', 'labels'])
+    # The export module will export issues to Excel.
+    Githubissues::Port::Export.new(connection, owner, repo, 'export.xlsx', fields: ['number', 'title', 'body', 'labels'])
 
 == Contributing
 
