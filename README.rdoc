@@ -26,11 +26,11 @@ githubissues-port can simply import or export issues from an Excel file.:
     owner = '***********'
     repo = '***********'
     
-    connection = Github.new basic_auth: "#{your_github_username}:#{your_github_password}"
+    connection = Github.new(basic_auth: "#{your_github_username}:#{your_github_password}")
     
-    Githubissues::Port::Import.new connection, owner, repo, 'import.xlsx', fields: ['labels']
+    Githubissues::Port::Import.new(connection, owner, repo, 'import.xlsx', fields: ['labels'])
     
-    Githubissues::Port::Export.new connection, owner, repo, 'export.xlsx', fields: ['number', 'title', 'body', 'labels']
+    Githubissues::Port::Export.new)connection, owner, repo, 'export.xlsx', fields: ['number', 'title', 'body', 'labels'])
 
 == Contributing
 
