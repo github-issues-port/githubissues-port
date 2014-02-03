@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/github-issues-port/githubissues-port.png?branch=master)](https://travis-ci.org/github-issues-port/githubissues-port)[![Gem Version](https://badge.fury.io/rb/githubissues-port.png)](http://badge.fury.io/rb/githubissues-port)
+[![Build Status](https://travis-ci.org/github-issues-port/githubissues-port.png?branch=master)](https://travis-ci.org/github-issues-port/githubissues-port)[![Gem Version](https://badge.fury.io/rb/githubissues-port.png)](http://badge.fury.io/rb/githubissues-port)[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ankit8898/githubissues-port/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 # Github Issues Port 
 
