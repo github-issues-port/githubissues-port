@@ -42,6 +42,8 @@ module Githubissues
               issue.assignee.login unless issue.assignee.nil?
             when 'labels'
               issue.labels.map(&:name).join(', ') unless issue.labels.nil?
+            when 'milestone'
+              issue.milestone.title unless issue.milestone.nil?
             else
               issue.send field
           end
