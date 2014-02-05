@@ -43,7 +43,7 @@ module Githubissues
             when 'labels'
               issue.labels.map(&:name).join(', ') unless issue.labels.nil?
             when 'milestone'
-              issue.milestone.map(&:title) unless issue.milestone.nil?
+              issue.milestone.map(&:number) unless issue.milestone.nil?
             else
               issue.send field
           end
