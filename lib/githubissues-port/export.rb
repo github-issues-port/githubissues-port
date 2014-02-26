@@ -44,6 +44,10 @@ module Githubissues
               issue.labels.map(&:name).join(', ') unless issue.labels.nil?
             when 'milestone'
               issue.milestone.title unless issue.milestone.nil?
+            when 'created_at'
+              Date.parse issue.created_at
+            when 'closed_at'
+              Date.parse issue.closed_at
             else
               issue.send field
           end
