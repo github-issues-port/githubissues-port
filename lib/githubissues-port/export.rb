@@ -45,9 +45,9 @@ module Githubissues
             when 'milestone'
               issue.milestone.title unless issue.milestone.nil?
             when 'created_at'
-              Date.parse issue.created_at
+              Date.parse issue.created_at unless issue.created_at.nil?
             when 'closed_at'
-              Date.parse issue.closed_at
+              Date.parse issue.closed_at unless issue.closed_at.nil?
             else
               issue.send field
           end
