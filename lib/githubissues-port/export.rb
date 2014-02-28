@@ -10,7 +10,7 @@ module Githubissues
         @connection = connection
         @owner = owner
         @repo = repo
-        @default_fields = %w(number title body labels assignee  state milestone created_at closed_at comments  bug enhancement wontfix question invalid duplicate comments_url events_url html_url labels_url,type,priority,module) 
+        @default_fields = %w(number title body labels assignee  state milestone created_at closed_at comments  bug enhancement wontfix question invalid duplicate comments_url events_url html_url labels_url,type,priority,module,status) 
         @fields = (options.has_key? :fields) ? options[:fields] : @default_fields 
         generate_excel
       end
