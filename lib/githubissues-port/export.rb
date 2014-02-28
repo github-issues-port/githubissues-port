@@ -4,11 +4,13 @@ require 'axlsx'
 module Githubissues
   module Port   
     class Githubissues::Port::Export
-      attr_reader :connection, :owner, :repo, :path, :default_fields 
+      attr_reader :connection, :owner, :repo, :path 
+
+      DEFAULT_FIELDS = %w(number title body labels assignee  state milestone created_at closed_at comments labels comments_url events_url html_url labels_url type priority module status) 
+
       def initialize connection, owner, repo, path, options = {}
         @path, @connection, @owner, @repo = path, connection, owner, repo
-        @default_fields = %w(number title body labels assignee  state milestone created_at closed_at comments  bug enhancement wontfix question invalid duplicate comments_url events_url html_url labels_url,type,priority,module) 
-        @fields = (options.has_key? :fields) ? options[:fields] : @default_fields 
+        @fields = (options.has_key? :fields) ? options[:fields] : DEFAULT_FIELDS
         generate_excel
       end
 
@@ -33,12 +35,14 @@ module Githubissues
       end
 
       def generate_row issue
+        labels = (issue.labels.nil?) ? [] : issue.labels.map{|l| l.name.downcase}
+    
         @fields.collect do |field|
           case field.downcase
             when 'assignee'
               issue.assignee.login unless issue.assignee.nil?
             when 'labels'
-              issue.labels.map(&:name).join(',') unless issue.labels.nil?
+              labels.join ', '
             when 'milestone'
               issue.milestone.title unless issue.milestone.nil?
             when 'created_at'
@@ -46,11 +50,13 @@ module Githubissues
             when 'closed_at'
               DateTime.parse issue.closed_at unless issue.closed_at.nil?
             when 'type'
-              issue.labels.map(&:name).join(',').split('Type - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Type - ')[1].nil?
+              labels.select{|l| (l =~ /type*/) or (%w(bug duplicate enhancement invalid question wontfix patch).include? l)}.join ', '
             when 'priority'
-              issue.labels.map(&:name).join(',').split('Priority - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Priority - ')[1].nil?
+              labels.select{|l| (l =~ /priority*/) or (%w(high medium low critical).include? l)}.join ', '
             when 'module'
-              issue.labels.map(&:name).join(',').split('Module - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Module - ')[1].nil?
+              labels.select{|l| l =~ /module*/}.join ', '
+            when 'status'
+              labels.select{|l| l =~ /status*/}.join ', '
             else
               issue.send field
           end
