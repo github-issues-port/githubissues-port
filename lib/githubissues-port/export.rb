@@ -54,6 +54,8 @@ module Githubissues
               issue.labels.map(&:name).join(',').split('Priority - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Priority - ')[1].nil?
             when 'module'
               issue.labels.map(&:name).join(',').split('Module - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Module - ')[1].nil?
+            when 'status'
+              issue.labels.map(&:name).join(',').split('Status - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Status - ')[1].nil?
             else
               issue.send field
           end
