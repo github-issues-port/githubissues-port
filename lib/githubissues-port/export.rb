@@ -40,6 +40,8 @@ module Githubissues
           case field.downcase
             when 'assignee'
               issue.assignee.login unless issue.assignee.nil?
+            when 'labels'
+              issue.labels.map(&:name).join(',') unless issue.labels.nil?
             when 'milestone'
               issue.milestone.title unless issue.milestone.nil?
             when 'created_at'
