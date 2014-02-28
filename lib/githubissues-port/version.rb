@@ -1,5 +1,5 @@
 module Githubissues
   module Port   
-    VERSION = "0.5.1"
+    VERSION = "1.0"
   end
 end

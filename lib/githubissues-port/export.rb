@@ -4,12 +4,9 @@ require 'axlsx'
 module Githubissues
   module Port   
     class Githubissues::Port::Export
-      attr_reader :connection, :owner, :repo, :path
+      attr_reader :connection, :owner, :repo, :path, :default_fields 
       def initialize connection, owner, repo, path, options = {}
-        @path = path
-        @connection = connection
-        @owner = owner
-        @repo = repo
+        @path, @connection, @owner, @repo = path, connection, owner, repo
         @default_fields = %w(number title body labels assignee  state milestone created_at closed_at comments  bug enhancement wontfix question invalid duplicate comments_url events_url html_url labels_url,type,priority,module) 
         @fields = (options.has_key? :fields) ? options[:fields] : @default_fields 
         generate_excel
@@ -26,11 +23,11 @@ module Githubissues
       def generate_sheet excel, state
         excel.workbook.add_worksheet(:name => state) do |sheet|
           sheet.add_row @fields        
-          issues = @connection.issues.list user: @owner,
-                                           repo: @repo,
-                                           filter: 'all',
+          issues = @connection.issues.list user:            @owner,
+                                           repo:            @repo,
+                                           filter:          'all',
                                            auto_pagination: true,
-                                           state: state
+                                           state:           state
           issues.each{|issue| sheet.add_row generate_row(issue)}
         end      
       end

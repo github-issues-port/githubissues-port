@@ -1,4 +1,3 @@
-require 'github_api'
 require 'githubissues-port'
 
 describe 'githubissues-port exporting and importing to xlsx' do

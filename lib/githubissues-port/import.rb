@@ -6,13 +6,11 @@ module Githubissues
     class Githubissues::Port::Import
       attr_reader :connection, :owner, :repo, :path, :messages, :header
       def initialize connection, owner, repo, path, options = {}
-        @path = path
-        @connection = connection
-        @owner = owner
-        @repo = repo
+        @path, @connection, @owner, @repo = path, connection, owner, repo
         @fields = (options.has_key? :fields) ? options[:fields] : %w(labels)
         @messages = []
         parse_excel
+        @messages
       end
 
       def parse_excel

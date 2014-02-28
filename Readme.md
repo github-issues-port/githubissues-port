@@ -29,9 +29,8 @@ githubissues-port can simply import or export issues from an Excel file.:
     
     your_github_username = '***********'
     your_github_password = '***********'
-
-    owner = '***********'
-    repo = '***********'
+    owner                = '***********'
+    repo                 = '***********'
     
     connection = Github.new(basic_auth: "#{your_github_username}:#{your_github_password}")
     
