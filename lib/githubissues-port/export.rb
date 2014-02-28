@@ -42,8 +42,6 @@ module Githubissues
               issue.assignee.login unless issue.assignee.nil?
             when 'milestone'
               issue.milestone.title unless issue.milestone.nil?
-            when 'labels'
-              issue.labels.map(&:name).join(',') unless issue.labels.nil?
             when 'created_at'
               DateTime.parse issue.created_at unless issue.created_at.nil?
             when 'closed_at'
