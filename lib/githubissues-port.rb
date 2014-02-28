@@ -1,4 +1,5 @@
-require "githubissues-port/version"
+require "githubissues-port/string"
+require "githubissues-port/array"
 require 'githubissues-port/export'
 require 'githubissues-port/import'
 
