@@ -10,7 +10,7 @@ module Githubissues
         @connection = connection
         @owner = owner
         @repo = repo
-        @default_fields = %w(number title body labels assignee  state milestone created_at closed_at comments comments_url events_url html_url labels_url) 
+        @default_fields = %w(number title body labels assignee  state milestone created_at closed_at comments  bug enhancement wontfix question invalid duplicate comments_url events_url html_url labels_url,type,priority,module) 
         @fields = (options.has_key? :fields) ? options[:fields] : @default_fields 
         generate_excel
       end
@@ -40,10 +40,20 @@ module Githubissues
           case field.downcase
             when 'assignee'
               issue.assignee.login unless issue.assignee.nil?
-            when 'labels'
-              issue.labels.map(&:name).join(', ') unless issue.labels.nil?
             when 'milestone'
               issue.milestone.title unless issue.milestone.nil?
+            when 'labels'
+              issue.labels.map(&:name).join(',') unless issue.labels.nil?
+            when 'created_at'
+              DateTime.parse issue.created_at unless issue.created_at.nil?
+            when 'closed_at'
+              DateTime.parse issue.closed_at unless issue.closed_at.nil?
+            when 'type'
+              issue.labels.map(&:name).join(',').split('Type - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Type - ')[1].nil?
+            when 'priority'
+              issue.labels.map(&:name).join(',').split('Priority - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Priority - ')[1].nil?
+            when 'module'
+              issue.labels.map(&:name).join(',').split('Module - ')[1].split(',')[0] unless issue.labels.map(&:name).join(',').nil? || issue.labels.map(&:name).join(',').split('Module - ')[1].nil?
             else
               issue.send field
           end
