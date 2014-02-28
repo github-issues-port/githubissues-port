@@ -5,9 +5,12 @@ module Githubissues
   module Port   
     class Githubissues::Port::Import
       attr_reader :connection, :owner, :repo, :path, :messages, :header
+
+      DEFAULT_FIELDS = %w(title labels) 
+
       def initialize connection, owner, repo, path, options = {}
         @path, @connection, @owner, @repo = path, connection, owner, repo
-        @fields = (options.has_key? :fields) ? options[:fields] : %w(labels)
+        @fields = (options.has_key? :fields) ? options[:fields] :  DEFAULT_FIELDS 
         @messages = []
         parse_excel
         @messages

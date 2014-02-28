@@ -11,14 +11,19 @@ describe 'githubissues-port exporting and importing to xlsx' do
     @connection = Github.new basic_auth: "#{@github_username}:#{@github_password}"
   end
 
-  it 'export should be successfull.' do
-    export = Githubissues::Port::Export.new @connection, @owner, @repo, 'export.xlsx', fields: ['number', 'title', 'body', 'labels']
-    #puts export.inspect
-    export.should_not be_nil
+  it 'export with given fields should be successfull.' do
+    lambda { Githubissues::Port::Export.new @connection, @owner, @repo, 'export.xlsx', fields: ['number', 'title', 'body', 'labels'] }.should_not raise_error
   end
 
-  it 'import should be successfull.' do
-    #puts import.messages.inspect
-    import.should_not be_nil
-  end  
+  it 'export with default fields should be successfull.' do
+    lambda { Githubissues::Port::Export.new @connection, @owner, @repo, 'export_full.xlsx'}.should_not raise_error
+  end
+
+  it 'import with given fields should be successfull.' do
+    lambda { Githubissues::Port::Import.new @connection, @owner, @repo, 'spec/fixtures/sample.xlsx', fields: ['title', 'labels'] }.should_not raise_error
+  end
+
+  it 'import with default fields should be successfull.' do
+    lambda { Githubissues::Port::Import.new @connection, @owner, @repo, 'spec/fixtures/sample.xlsx' }.should_not raise_error
+  end      
 end
