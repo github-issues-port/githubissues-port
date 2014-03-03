@@ -50,13 +50,13 @@ module Githubissues
             when 'closed_at'
               DateTime.parse issue.closed_at unless issue.closed_at.nil?
             when 'type'
-              labels.filter_by_category('type').join ', '
+              labels.filter_by_category('type').join(', ').split('type - ')[1]
             when 'priority'
-              labels.filter_by_category('priority').join ', '
+               labels.filter_by_category('priority').join(', ').split('priority - ')[1]
             when 'module'
-              labels.filter_by_category('module').join ', '
+              labels.filter_by_category('module').join(', ').split('module - ')[1]
             when 'status'
-              labels.filter_by_category('status').join ', '
+              labels.filter_by_category('status').join(', ').split('status - ')[1]
             else
               issue.send field
           end
