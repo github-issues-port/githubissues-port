@@ -7,7 +7,7 @@ module Githubissues
 
       attr_reader :connection, :owner, :repo, :path ,:params
 
-      DEFAULT_FIELDS = %w(number title body labels assignee  state milestone created_at updated_at closed_at type priority module status) 
+      DEFAULT_FIELDS = %w(Number Title Body Labels Assignee  State Milestone Created_at Updated_at Closed_at Type Priority Module Status) 
       
       def initialize connection, owner, repo, path, options = {},params
         @path, @connection, @owner, @repo = path, connection, owner, repo
@@ -42,8 +42,12 @@ module Githubissues
          params
       end
       def generate_sheet excel, state
+        
+         
+        
         excel.workbook.add_worksheet(:name => state) do |sheet|
-          sheet.add_row @fields  
+          heading = sheet.styles.add_style sz: 12,b:true, fg_color: "0C65D1"
+          sheet.add_row @fields  ,style:heading
           issues = @connection.issues.list self.generate_params(state)       
           issues.each{|issue| sheet.add_row generate_row(issue)}
         end      
@@ -52,7 +56,7 @@ module Githubissues
       def generate_row issue
         labels = (issue.labels.nil?) ? [] : issue.labels.map{|l| l.name.downcase}
         @fields.collect do |field|
-          case field.downcase
+          case field
             when 'assignee'
               issue.assignee.login unless issue.assignee.nil?
             when 'labels'
@@ -74,7 +78,7 @@ module Githubissues
             when 'status'
               labels.filter_by_category('status').join(', ').split('status - ')[1]
             else
-              issue.send field
+              issue.send field.downcase
           end
         end
       end
