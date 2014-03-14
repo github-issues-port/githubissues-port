@@ -7,7 +7,7 @@ module Githubissues
 
       attr_reader :connection, :owner, :repo, :path ,:params
 
-      DEFAULT_FIELDS = %w(number title body labels assignee  state milestone created_at updated_at closed_at comments labels comments_url events_url html_url labels_url type priority module status) 
+      DEFAULT_FIELDS = %w(number title body labels assignee  state milestone created_at updated_at closed_at comments labels type priority module status) 
       
       def initialize connection, owner, repo, path, options = {},params
         @path, @connection, @owner, @repo = path, connection, owner, repo
