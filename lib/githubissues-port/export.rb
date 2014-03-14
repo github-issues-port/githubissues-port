@@ -56,7 +56,7 @@ module Githubissues
       def generate_row issue
         labels = (issue.labels.nil?) ? [] : issue.labels.map{|l| l.name.downcase}
         @fields.collect do |field|
-          case field
+          case field.downcase
             when 'assignee'
               issue.assignee.login unless issue.assignee.nil?
             when 'labels'
