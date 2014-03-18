@@ -41,8 +41,10 @@ module Githubissues
          if @params[:params]['options']=='and'
           params=params.merge({:labels=>@params[:params]['labels'].join(',')}) unless @params[:params][:labels].blank?
          else
-          params=params.merge({:labels=>labels}) unless labels.blank?
+          params=params.merge({:labels=>labels}) unless labels.blank? && @params[:params][:labels].blank?
          end
+         p "paramssssssssssssssssssssssss"
+         p params
          params
 
       end
@@ -52,14 +54,18 @@ module Githubissues
           heading = sheet.styles.add_style sz: 12,b:true, fg_color: "0C65D1"
           sheet.add_row @fields  ,style:heading
           issues=[]
-          if @params[:params]['options']=='or'
-           @params[:params]['labels'].each do |labels|
-             issues=issues + (connection.issues.list self.generate_params(state,labels))
-           end
+          if @params[:params][:labels].blank?
+            labels=[]
+            issues=connection.issues.list self.generate_params(state,labels)
+          elsif @params[:params]['options']=='or' 
+             @params[:params]['labels'].each do |labels|
+            issues=issues + (connection.issues.list self.generate_params(state,labels))
+          end
           else
             labels=[]
             issues=connection.issues.list self.generate_params(state,labels)
           end
+          
           issues.each{|issue| sheet.add_row generate_row(issue)}
         end      
       end
