@@ -31,24 +31,27 @@ module Githubissues
       end
       
 
-      def generate_params(state)
+      def generate_params(state,labels)
          params=({:user=>@owner,:repo=>@repo,:filter=>'all',:auto_pagination=>true,:state=>state})
-         params=params.merge({:labels=>@params[:params]['labels'].join(',')}) unless @params[:params]['labels'].nil?
          params=params.merge({:milestone=>@params[:params]['milestone']}) unless @params[:params]['milestone'].blank?
          params=params.merge({:assignee=>@params[:params]['assignee']}) unless @params[:params]['assignee'].blank?
          params=params.merge({:creator=>@params[:params]['creator']}) unless @params[:params]['creator'].blank?
          params=params.merge({:mentioned=>@params[:params]['mentioned']}) unless @params[:params]['mentioned'].blank?
          params=params.merge({:since=>@params[:params]['datepicker'].to_time.utc.iso8601.split('+')[0]}) unless @params[:params]['datepicker'].blank?
+         params=params.merge({:labels=>labels}) unless labels.blank?
          params
+
       end
+
       def generate_sheet excel, state
-        
-         
-        
         excel.workbook.add_worksheet(:name => state) do |sheet|
           heading = sheet.styles.add_style sz: 12,b:true, fg_color: "0C65D1"
           sheet.add_row @fields  ,style:heading
-          issues = @connection.issues.list self.generate_params(state)       
+          issues=[]
+          @params[:params]['labels'].each do |labels|
+             issues=issues + (connection.issues.list self.generate_params(state,labels))
+          end
+
           issues.each{|issue| sheet.add_row generate_row(issue)}
         end      
       end
@@ -60,7 +63,7 @@ module Githubissues
             when 'assignee'
               issue.assignee.login unless issue.assignee.nil?
             when 'labels'
-              labels.join ', '
+              labels.join ', ' 
             when 'milestone'
               issue.milestone.title unless issue.milestone.nil?
             when 'created_at'
