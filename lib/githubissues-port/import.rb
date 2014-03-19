@@ -19,6 +19,7 @@ module Githubissues
       def parse_excel
         creek = Creek::Book.new path, :check_file_extension => false
         sheet= creek.sheets[0]
+        raise " Or Large Number of Issues to import" if sheet.rows.count>500     
         sheet.rows.each_with_index do |row, row_index|
           break if row.first.nil? and row[1].nil?
           row_number = row_index + 1

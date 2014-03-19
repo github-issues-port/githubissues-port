@@ -7,7 +7,7 @@ module Githubissues
 
       attr_reader :connection, :owner, :repo, :path ,:params
 
-      DEFAULT_FIELDS = %w(Number Title Body Labels Assignee  State Milestone Created_at Updated_at Closed_at Type Priority Module Status) 
+      DEFAULT_FIELDS = %w(Number Title Body Labels Assignee  State Milestone Created_by Created_at Updated_at Closed_by Closed_at Type Priority Module Status) 
       
       def initialize connection, owner, repo, path, options = {},params
         @path, @connection, @owner, @repo = path, connection, owner, repo
@@ -43,8 +43,6 @@ module Githubissues
          else
           params=params.merge({:labels=>labels}) unless labels.blank? && @params[:params][:labels].blank?
          end
-         p "paramssssssssssssssssssssssss"
-         p params
          params
 
       end
@@ -71,6 +69,8 @@ module Githubissues
       end
 
       def generate_row issue
+        id=issue.number
+        get_closed_by =connection.issues.get @owner,@repo,id
         labels = (issue.labels.nil?) ? [] : issue.labels.map{|l| l.name.downcase}
         @fields.collect do |field|
           case field.downcase
@@ -94,6 +94,10 @@ module Githubissues
               labels.filter_by_category('module').join(', ').split('module - ')[1]
             when 'status'
               labels.filter_by_category('status').join(', ').split('status - ')[1]
+            when 'closed_by'
+             get_closed_by['closed_by']['login'] unless get_closed_by['closed_by'].nil?
+            when 'created_by'
+              issue['user']['login'] unless issue['user'].nil?
             else
               issue.send field.downcase
           end
