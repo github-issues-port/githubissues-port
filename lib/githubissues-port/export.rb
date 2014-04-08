@@ -87,13 +87,21 @@ module Githubissues
             when 'closed_at'
               DateTime.parse issue.closed_at unless issue.closed_at.nil?
             when 'type'
-              labels.filter_by_category('type').join(', ').split('type - ')[1]
+              final_labels=[]
+              labels.filter_by_category('type').each{|x| final_labels.push(x.split('type - ')[1])}
+              final_labels.join(',')
             when 'priority'
-               labels.filter_by_category('priority').join(', ').split('priority - ')[1]
+              final_labels=[]
+              labels.filter_by_category('priority').each{|x| final_labels.push(x.split('priority - ')[1])}
+              final_labels.join(',')
             when 'module'
-              labels.filter_by_category('module').join(', ').split('module - ')[1]
+              final_labels=[]
+              labels.filter_by_category('module').each{|x| final_labels.push(x.split('module - ')[1])}
+              final_labels.join(',')
             when 'status'
-              labels.filter_by_category('status').join(', ').split('status - ')[1]
+              final_labels=[]
+              labels.filter_by_category('status').each{|x| final_labels.push(x.split('status - ')[1])}
+              final_labels.join(',')
             when 'closed_by'
              get_closed_by['closed_by']['login'] unless get_closed_by['closed_by'].nil?
             when 'created_by'
