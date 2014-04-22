@@ -51,14 +51,14 @@ module Githubissues
 
       def update_existing_issue number, updates
         issue = @connection.issues.edit @owner, @repo, number, updates
-        @messages.push "Issue ##{issue.number} updated: #{updates.inspect}" 
+        @messages.push({:number=>"#{issue.number}",:updates=>"#{updates}",:status=>"updated",:owner=>@owner,:repo=>@repo})
       end
 
       def create_new_issue number, updates
         @connection.user = @owner
         @connection.repo = @repo          
         issue = @connection.issues.create updates
-        @messages.push "Issue ##{issue.number} created: #{updates.inspect}"
+        @messages.push({:number=>"#{issue.number}",:updates=>"#{updates}",:status=>"created",:owner=>@owner,:repo=>@repo})
       end
 
       def parse_row row, row_number
